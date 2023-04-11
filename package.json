@@ -1,5 +1,5 @@
 {
-	"name": "ma_premiere_API",
+	"name": "mon_api",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -8,5 +8,11 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.18.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.22"
+	}
 }
