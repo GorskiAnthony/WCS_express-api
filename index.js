@@ -3,17 +3,7 @@ const PORT = 5050;
 const app = express();
 
 /**
- * Création de notre 1er route
- * GET /
- */
-// ⚠️ rappel : callback => une fonction dans une fonction
-//   ma route, callback
-app.get("/", (request, response) => {
-	response.send("Tu as utilisé pour la 1ere fois, mon API");
-});
-
-/**
- * GET /promos
+ * Data de la promo
  */
 
 const promos = [
@@ -114,27 +104,12 @@ const promos = [
 	},
 ];
 
-app.get("/promos", (req, res) => {
-	res.send(promos);
-});
-
 /**
- * GET /promos/:id
- *
- * ⚠️ attention: les `:` sont hyper important !
- * car sans eux, `/promos/id` est route classique alors qu'avec
- * id peut évoluer (1 / 2 / 3 / ... / ♾️)
+ * GET /
  */
-app.get("/promos/:number", (req, res) => {
-	const user = promos.find(
-		(member) => member.id === parseInt(req.params.number)
-	);
 
-	if (user) {
-		res.send(user);
-	} else {
-		res.status(404).send("Je ne connais pas cette personne");
-	}
+app.get("/", (request, response) => {
+	response.send(promos);
 });
 
 /** On ne touche pas ce qu'il y a en bas ⬇️ */
