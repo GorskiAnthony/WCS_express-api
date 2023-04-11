@@ -105,11 +105,55 @@ const promos = [
 ];
 
 /**
- * GET /
+ * GET /promos
+ * @desc la query `limit` prend en charge un nombre entier
  */
 
-app.get("/", (request, response) => {
-	response.send(promos);
+/**
+ * request.params ⬇️
+ * http://localhost:5050/promos/11
+ *
+ * request.query ⬇️
+ * http://localhost:5050/promos?limit=5
+ */
+
+app.get("/promos", (request, response) => {
+	// Je desctructure `request.query`
+	const { limit, role } = request.query;
+	// request.query.limit;
+
+	// Si j'ai un role alors
+	if (role) {
+		const members = promos.filter((member) => member.role === role);
+		// si en plus du role, j'ai une limite, alors cumule les 2
+		if (limit) {
+			return response.send(members.slice(0, limit));
+		}
+		return response.send(members);
+	}
+
+	// si je n'ai que la limite, alors
+	if (limit) {
+		return response.send(promos.slice(0, limit));
+	}
+
+	// par défaut, rend moi les 10 premiers
+	return response.send(promos.slice(0, 10));
+});
+
+/**
+ * GET /promos/:id
+ * @desc permet de récupèrer 1 membre de la promo
+ */
+
+app.get("/promos/:id", (req, res) => {
+	const user = promos.find((membre) => membre.id === parseInt(req.params.id));
+
+	if (!user) {
+		res.status(404).json({ message: "user not found" });
+	} else {
+		res.send(user);
+	}
 });
 
 /** On ne touche pas ce qu'il y a en bas ⬇️ */
